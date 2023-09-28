@@ -3,47 +3,37 @@ package org.mazerunner.GeneratorHandling;
 public class Cell {
 
     private final int id;
-
-    private int value;
-    private Byte walls = 0b0000;
-
-    private final Byte[] Masks = {
-            0b0001, // top
-            0b0010, // right
-            0b0100, // bottom
-            0b1000  // left
-    };
-
-    public void breakTopWall() {
-        walls = (byte) (walls | Masks[0]);
-    }
-    public void breakRightWall() {
-        walls = (byte) (walls | Masks[1]);
-    }
-    public void breakBottomWall() {
-        walls = (byte) (walls | Masks[2]);
-    }
-    public void breakLeftWall() {
-        walls = (byte) (walls | Masks[3]);
-    }
+    private boolean visited = false;
+    private final boolean[] walls = {true, true, true, true}; // Top, Right, Bottom, Left
     public Cell(int id) {
         this.id = id;
+    }
+    public boolean isVisited() {
+        return visited;
+    }
+    public void setVisited() {
+        this.visited = true;
     }
     public int getId() {
         return this.id;
     }
+    public boolean hasWall(int direction) {
+        return walls[direction];
+    }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void removeWall(int direction) {
+        walls[direction] = false;
     }
-    public int getValue() {
-        return this.value;
-    }
+
     public String[] getCell() {
+        String top = walls[0] ? "#" : ".";
+        String right = walls[1] ? "#" : ".";
+        String bot = walls[2] ? "#" : ".";
+        String left = walls[3] ? "#" : ".";
         String[] cell = new String[3];
-        cell[0] = "###";
-        cell[1] = "#" + id + "#";
-        cell[2] = "###";
+        cell[0] = "#" + top + "#";
+        cell[1] = left + "." + right;
+        cell[2] = "#" + bot + "#";
         return cell;
     }
 }
