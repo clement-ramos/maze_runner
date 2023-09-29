@@ -18,7 +18,7 @@ public class Maze {
         this.generatorMethod = generatorMethod; // simple, graph or optimized
         initializeGrid();
         chooseGenerator();
-        displayMaze();
+    /*    displayMaze();*/
     }
     private void initializeGrid() {
         for (int id = 0; id < cellTab.length; id++) {
@@ -30,13 +30,13 @@ public class Maze {
 
             case "perfect" -> switch (generatorMethod.toLowerCase()) {
                 case "simple" -> new SimplePerfectMazeGenerator(cellTab, width, height);
-                case "graph" -> new GraphBasedMazeGenerator(cellTab, width, height);
+                case "graph" -> new GraphBasedPerfectMazeGenerator(cellTab, width, height);
                 case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
                 default -> throw new MazeGenerationException("Méthode de génération invalide.");
             };
             case "imperfect" -> switch (generatorMethod.toLowerCase()) {
                 case "simple" -> new SimpleImperfectMazeGenerator(cellTab, width, height);
-                case "graph" -> new GraphBasedMazeGenerator(cellTab, width, height);
+                case "graph" -> new GraphBasedImperfectMazeGenerator(cellTab, width, height);
                 case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
                 default -> throw new MazeGenerationException("Méthode de génération invalide.");
             };
