@@ -1,29 +1,16 @@
 package org.mazerunner.GeneratorHandling;
 
-import java.util.Stack;
+import org.mazerunner.Cell;
+import org.mazerunner.MazeGenerator;
 import java.util.Random;
+import java.util.Stack;
 
-
-public class Maze {
-    private final Cell[] cellTab;
-    private final int width;
-    private final int height;
-    private Stack<Integer> path;
-
-    public Maze(int width, int height) {
-        this.width = width;
-        this.height = height;
-        cellTab = new Cell[width * height];
-        initializeGrid();
-        createMaze();
-        displayMaze();
+public class SimpleImperfectMazeGenerator implements MazeGenerator{
+    public SimpleImperfectMazeGenerator(Cell[] cell, int width, int height) {
+        generateMaze(cell, width, height);
     }
-    private void initializeGrid() {
-        for (int id = 0; id < cellTab.length; id++) {
-            cellTab[id] = new Cell(id);
-        }
-    }
-    public void createMaze() {
+    @Override
+    public void generateMaze(Cell[] cellTab, int width, int height) {
         Stack<Integer> path = new Stack<>();
         path.push(0);
 
@@ -80,15 +67,15 @@ public class Maze {
                 path.pop();
             }
         }
-        // IMPERFECT MAZE
-/*        if (cellTab[0].hasWall(1)) {
+        if (cellTab[0].hasWall(1)) {
             cellTab[0].removeWall(1);
             cellTab[1].removeWall(3);
         } else {
             cellTab[0].removeWall(2);
             cellTab[width].removeWall(0);
-        }*/
+        }
     }
+
     public static int sum(int[] array) {
         int sum = 0;
         for (int value : array) {
@@ -96,27 +83,6 @@ public class Maze {
         }
         return sum;
     }
-    public void displayMaze() {
-        cellTab[0].removeWall(3);
-        cellTab[cellTab.length - 1].removeWall(1);
-        int delta = 0;
-        for (int y = 0; y < height; y++) {
-            StringBuilder str1 = new StringBuilder();
-            StringBuilder str2 = new StringBuilder();
-            StringBuilder str3 = new StringBuilder();
-            for (int x = 0; x < width; x++) {
-                String[] strs = cellTab[x + delta].getCell();
-                str1.append(strs[0]);
-                str2.append(strs[1]);
-                str3.append(strs[2]);
-            }
-            delta += width;
-            System.out.println(str1 + "\n" + str2 + "\n" + str3);
-        }
-    }
+
+
 }
-
-
-
-
-

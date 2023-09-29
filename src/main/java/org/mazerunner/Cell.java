@@ -1,4 +1,4 @@
-package org.mazerunner.GeneratorHandling;
+package org.mazerunner;
 
 public class Cell {
 
