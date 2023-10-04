@@ -3,50 +3,73 @@ package org.mazerunner.GeneratorHandling;
 import org.mazerunner.MazeGenerator;
 import org.mazerunner.Cell;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
+import java.util.ArrayList;
 
 public class SimplePerfectMazeGenerator implements MazeGenerator{
+
+    private final Random random = new Random();
 
     public SimplePerfectMazeGenerator(Cell[] cellTab, int width, int height) {
         generateMaze(cellTab, width, height);
     }
 
     @Override
-    public void generateMaze(Cell[] cellTab, int width, int height) {
-        List<String> array = new ArrayList<String>();
-        List<String> wall = new ArrayList<String>();
-        List<String> line = new ArrayList<String>();
+    public void generateMaze(Cell[] cell, int width, int height) {
 
-        for (int i = 0; i < width; i++) {
-            wall.add("#");
+        Stack<Integer> path = new Stack<>(); // Path of visited cells
+        path.push(0); // Starting cell
 
-            if(((i - 1) % 2 == 0)  && (i != (width - 1))){
-                line.add(".");
+        while (!path.isEmpty()) {
+            int id = path.peek(); // Current cell
+            cell[id].setVisited(); // Marks current cell as visited
+            List<Integer> neighbors = getUnvisitedNeighbors(id, width, height, cell); // List of unvisited neighbors
+
+            if (!neighbors.isEmpty()) {
+                int nextCell = neighbors.get(random.nextInt(neighbors.size())); // Chooses a random neighbor
+                int wallToRemove = getWallToRemove(id, nextCell, width); // Gets the wall to remove
+                cell[id].removeWall(wallToRemove);
+                cell[nextCell].setVisited();
+                int oppositeWall = (wallToRemove + 2) % 4;
+                cell[nextCell].removeWall(oppositeWall);
+                path.push(nextCell); // Makes neighbor current for next iteration
+            } else {
+                path.pop(); // Backtracks if no unvisited neighbors
             }
-            else {
-                line.add("#");
-            }
         }
-        for (int i = 0; i < height; i++) {
-           if(i % 2 == 0){
-               array.addAll(wall);
-           }
-           else if (i != height - 1){
-               array.addAll(line);
-           }
+    }
 
+    private List<Integer> getUnvisitedNeighbors(int id, int width, int height, Cell[] cell) {
+        List<Integer> neighbors = new ArrayList<>();
+        int x = id % width;
+        int y = id / width;
+        if (y > 0 && !cell[id - width].isVisited()) {
+            neighbors.add(id - width);
         }
-
-        for(int y = 0; y < height; y++){
-           for(int x =0; x < width;x++){
-               System.out.print(array.get(x + y * width));
-           }
-           System.out.println();
+        if (x < width - 1 && !cell[id + 1].isVisited()) {
+            neighbors.add(id + 1);
         }
+        if (y < height - 1 && !cell[id + width].isVisited()) {
+            neighbors.add(id + width);
+        }
+        if (x > 0 && !cell[id - 1].isVisited()) {
+            neighbors.add(id - 1);
+        }
+        return neighbors; // Returns list of unvisited neighbors
+    }
 
+    private int getWallToRemove(int id, int nextCell, int width) { // Targets the direction of the next cell from the current cell
+        if (nextCell == id - width) {
+            return 0;
+        } else if (nextCell == id + 1) {
+            return 1;
+        } else if (nextCell == id + width) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
 }

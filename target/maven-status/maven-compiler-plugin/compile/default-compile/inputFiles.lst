@@ -1,7 +1,10 @@
 /home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/MazeGenerator.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Classes/OptimizedMazeGenerator.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Classes/SimplePerfectMazeGenerator.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Classes/Maze.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Classes/SimpleImperfectMazeGenerator.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/main/MazeRunner.java
-/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Classes/GraphBasedMazeGenerator.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/GeneratorHandling/GraphBasedImperfectMazeGenerator.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/GeneratorHandling/SimplePerfectMazeGenerator.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Maze.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/GeneratorHandling/OptimizedMazeGenerator.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/GeneratorHandling/SimpleImperfectMazeGenerator.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/Cell.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/exeptions/MazeGenerationException.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/MazeRunner.java
+/home/clement/Documents/GitHub/maze_runner/src/main/java/org/mazerunner/GeneratorHandling/GraphBasedPerfectMazeGenerator.java

@@ -10,7 +10,7 @@ public class Maze {
     public String generationType, generatorMethod;
 /*    private Stack<Integer> path;*/
 
-    public Maze(int width, int height, String generationType, String generatorMethod) throws MazeGenerationException {
+    public Maze(int width, int height, String generationType, String generatorMethod){
         this.width = width;
         this.height = height;
         cellTab = new Cell[width * height];
@@ -18,30 +18,30 @@ public class Maze {
         this.generatorMethod = generatorMethod; // simple, graph or optimized
         initializeGrid();
         chooseGenerator();
-    /*    displayMaze();*/
+        displayMaze();
     }
     private void initializeGrid() {
         for (int id = 0; id < cellTab.length; id++) {
             cellTab[id] = new Cell(id);
         }
     }
-    public void chooseGenerator() throws MazeGenerationException {
-        MazeGenerator generator = switch (generationType.toLowerCase()) {
-
-            case "perfect" -> switch (generatorMethod.toLowerCase()) {
-                case "simple" -> new SimplePerfectMazeGenerator(cellTab, width, height);
-                case "graph" -> new GraphBasedPerfectMazeGenerator(cellTab, width, height);
-                case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
-                default -> throw new MazeGenerationException("Méthode de génération invalide.");
-            };
-            case "imperfect" -> switch (generatorMethod.toLowerCase()) {
-                case "simple" -> new SimpleImperfectMazeGenerator(cellTab, width, height);
-                case "graph" -> new GraphBasedImperfectMazeGenerator(cellTab, width, height);
-                case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
-                default -> throw new MazeGenerationException("Méthode de génération invalide.");
-            };
-            default -> throw new MazeGenerationException("Type de labyrinthe invalide.");
-        };
+    public void chooseGenerator(){
+        switch (generationType) {
+            case "perfect" -> {
+                switch (generatorMethod) {
+                    case "simple" -> new SimplePerfectMazeGenerator(cellTab, width, height);
+                    case "graph" -> new GraphBasedPerfectMazeGenerator(cellTab, width, height);
+                    case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
+                }
+            }
+            case "imperfect" -> {
+                switch (generatorMethod) {
+                    case "simple" -> new SimpleImperfectMazeGenerator(cellTab, width, height);
+                    case "graph" -> new GraphBasedImperfectMazeGenerator(cellTab, width, height);
+                    case "optimized" -> new OptimizedMazeGenerator(cellTab, width, height);
+                }
+            }
+        }
     }
 
     public void displayMaze() {
